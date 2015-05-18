@@ -1,6 +1,14 @@
 # Kubestack
 
-Provision a Kubernetes cluster with [Packer](https://packer.io) and [Terraform](https://www.terraform.io).
+Provision a Kubernetes cluster with [Packer](https://packer.io) and [Terraform](https://www.terraform.io) on Google Compute Engine.
+
+## Prep
+
+- [Install Packer](https://packer.io/docs/installation.html)
+- [Install Terraform](https://www.terraform.io/intro/getting-started/install.html)
+- [Setup an Authentication JSON File](https://www.terraform.io/docs/providers/google/index.html#account_file)
+
+The Packer and Terraform configs assume your authentication JSON file is stored under `/etc/kubestack-account.json`
 
 ## Packer Images
 
@@ -36,6 +44,10 @@ packer build kubestack-worker.json
 ## Terraform
 
 Terraform will be used to declare and provision a Kubernetes cluster.
+
+### Prep
+
+Edit `terraform/sshkey`. Replace the ssh public key metadata.
 
 ### Provision the Kubernetes Cluster
 
