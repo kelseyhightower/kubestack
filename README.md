@@ -10,19 +10,19 @@ Immutable infrastructure is the future. Instead of using cloud-init to provision
 cd packer
 ```
 
-### Kubestack Base Image
+### Create the Kubestack Base Image
 
 ```
 packer build kubestack.json
 ```
 
-### Kubestack Server Image
+### Create the Kubestack Server Image
 
 ```
 packer build kubestack-server.json
 ```
 
-### Kubestack Worker Image
+### Create the Kubestack Worker Image
 
 ```
 packer build kubestack-worker.json
@@ -32,15 +32,11 @@ packer build kubestack-worker.json
 
 Terraform will be used to declare and provision a Kubernetes cluster.
 
+### Provision the Kubernetes Cluster
+
 ```
 cd terraform
-```
-
-```
 terraform plan
-```
-
-```
 terraform apply
 ```
 
@@ -53,7 +49,7 @@ resource "google_compute_instance" "kubelet" {
     count = 5
 ```
 
-Increase the count to your desired instance count.
+Increase the count to your desired instance count and apply the changes.
 
 ```
 terraform plan
