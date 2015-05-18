@@ -2,6 +2,10 @@
 
 Provision a Kubernetes cluster with [Packer](https://packer.io) and [Terraform](https://www.terraform.io) on Google Compute Engine.
 
+## Status
+
+Currently Kubestack only works for my environment, but I'm publishing the bits so you can learn from it. Over the next couple of weeks the repo should be generic enough for reuse with complete documentation.
+
 ## Prep
 
 - [Install Packer](https://packer.io/docs/installation.html)
