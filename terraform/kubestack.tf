@@ -4,6 +4,20 @@ provider "google" {
     region = "us-central1"
 }
 
+resource "google_compute_firewall" "kube-apiserver" {
+    description = "Kubernetes API Server Secure Port"
+    name = "secure-kube-apiserver"
+    network = "default"
+
+    allow {
+        protocol = "tcp"
+        ports = ["6443"]
+    }
+
+    source_tags = ["kubernetes", "kube-apiserver"]
+    source_ranges = ["0.0.0.0/0"]
+}
+
 resource "google_compute_instance" "etcd" {
     count = 3
 
@@ -80,7 +94,7 @@ resource "google_compute_instance" "kube-apiserver" {
 }
 
 resource "google_compute_instance" "kubelet" {
-    count = 5
+    count = 3
 
     name = "kubelet${count.index}"
     can_ip_forward = true
