@@ -1,0 +1,13 @@
+[Unit]
+Description=Kubernetes Proxy
+Documentation=https://github.com/GoogleCloudPlatform/kubernetes
+
+[Service]
+ExecStart=/opt/bin/kube-proxy \
+  --master=http://kube-apiserver.c.kubestack.internal:8080 \
+  --logtostderr=true
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,19 @@
+[Unit]
+Description=etcd
+
+[Service]
+ExecStart=/opt/bin/etcd \
+  --name etcd0 \
+  --data-dir /var/lib/etcd \
+  --initial-advertise-peer-urls http://etcd0.c.kubestack.internal:2380 \
+  --listen-peer-urls http://0.0.0.0:2380 \
+  --advertise-client-urls http://etcd0.c.kubestack.internal:2379 \
+  --listen-client-urls http://0.0.0.0:2379 \
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster etcd0=http://etcd0.c.kubestack.internal:2380,etcd1=http://etcd1.c.kubestack.internal:2380,etcd2=http://etcd2.c.kubestack.internal:2380 \
+  --initial-cluster-state new
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,22 @@
+[Unit]
+Description=Docker Application Container Engine
+Documentation=http://docs.docker.io
+Requires=flannel.service
+After=flannel.service
+
+[Service]
+EnvironmentFile=/run/flannel/subnet.env
+ExecStartPre=/bin/mount --make-rprivate /
+ExecStart=/opt/bin/docker \
+  --daemon \
+  --storage-driver=overlay \
+  --host=unix:///var/run/docker.sock \
+  --host=tcp://0.0.0.0:2375 \
+  --bip=${FLANNEL_SUBNET} \
+  --mtu=${FLANNEL_MTU} \
+  --ip-masq=false
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

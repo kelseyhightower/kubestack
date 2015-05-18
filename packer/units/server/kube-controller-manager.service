@@ -1,0 +1,15 @@
+[Unit]
+Description=Kubernetes Controller Manager
+Documentation=https://github.com/GoogleCloudPlatform/kubernetes
+Requires=kube-apiserver.service
+After=kube-apiserver.service
+
+[Service]
+ExecStart=/opt/bin/kube-controller-manager \
+  --master=http://kube-apiserver.c.kubestack.internal:8080 \
+  --logtostderr=true
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

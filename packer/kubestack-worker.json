@@ -1,0 +1,29 @@
+{
+  "builders": [{
+    "type": "googlecompute",
+    "account_file": "/etc/kubestack-account.json",
+    "project_id": "kubestack",
+    "source_image": "kubestack-0-0-1-v20150517",
+    "zone": "us-central1-a",
+    "disk_size": 100,
+    "image_name": "kubestack-worker-0-0-1-v20150517",
+    "image_description": "CoreOS Kubernetes Worker Image",
+    "machine_type": "n1-standard-1",
+    "ssh_username": "core"
+  }],
+  "provisioners": [{
+    "type": "file",
+    "source": "units/worker/",
+    "destination": "/tmp"
+  },
+  {
+    "type": "shell",
+    "inline": [
+      "sudo mv /tmp/*.service /etc/systemd/system",
+      "sudo systemctl enable flannel",
+      "sudo systemctl enable docker",
+      "sudo systemctl enable kube-kubelet",
+      "sudo systemctl enable kube-proxy"
+    ]
+  }]
+}
