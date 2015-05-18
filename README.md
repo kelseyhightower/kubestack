@@ -6,13 +6,18 @@ Provision a Kubernetes cluster with [Packer](https://packer.io) and [Terraform](
 
 Immutable infrastructure is the future. Instead of using cloud-init to provision machines at boot we'll create custom images using Packer for the Kubernetes server and worker machines.
 
+Run the packer commands below will create the following images:
+
 ```
-cd packer
+kubestack-0-0-1-v20150517
+kubestack-server-0-0-1-v20150517
+kubestack-worker-0-0-1-v20150517
 ```
 
 ### Create the Kubestack Base Image
 
 ```
+cd packer
 packer build kubestack.json
 ```
 
