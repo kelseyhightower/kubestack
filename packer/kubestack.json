@@ -1,23 +1,23 @@
 {
-  "builders": [{
-    "type": "googlecompute",
-    "account_file": "/etc/kubestack-account.json",
-    "project_id": "kubestack",
-    "source_image": "coreos-alpha-681-0-0-v20150514",
-    "zone": "us-central1-a",
-    "disk_size": 100,
-    "image_name": "kubestack-0-0-1-v20150517",
-    "image_description": "CoreOS Kubernetes Base Image",
-    "machine_type": "n1-standard-1",
-    "ssh_username": "core"
-  }],
-  "provisioners": [{
-    "type": "shell",
-    "inline": [
-      "sudo mkdir -p /opt/bin",
-      "wget http://storage.googleapis.com/kubestack/kubestack-0.0.1.tar.gz",
-      "sudo tar -xvf kubestack-0.0.1.tar.gz -C /opt/bin",
-      "sudo chown root:root -R /opt/bin"
-    ]
-  }]
+    "builders": [{
+        "type": "googlecompute",
+        "account_file": "/etc/kubestack-account.json",
+        "project_id": "kubestack",
+        "source_image": "coreos-alpha-681-0-0-v20150514",
+        "zone": "us-central1-a",
+        "disk_size": 100,
+        "image_name": "kubestack-0-0-1-v20150517",
+        "image_description": "CoreOS Kubernetes Base Image",
+        "machine_type": "n1-standard-1",
+        "ssh_username": "core"
+    }],
+    "provisioners": [{
+        "type": "shell",
+        "inline": [
+            "sudo mkdir -p /opt/bin",
+            "wget http://storage.googleapis.com/kubestack/kubestack-0.0.1.tar.gz",
+            "sudo tar -xvf kubestack-0.0.1.tar.gz -C /opt/bin",
+            "sudo chown root:root -R /opt/bin"
+        ]
+    }]
 }
