@@ -16,7 +16,7 @@ The Packer and Terraform configs assume your authentication JSON file is stored 
 
 ## Packer Images
 
-Immutable infrastructure is the future. Instead of using cloud-init to provision machines at boot we'll create custom images using Packer for the Kubernetes server and worker machines.
+Immutable infrastructure is the future. Instead of using cloud-init to provision machines at boot we'll create a custom image using Packer.
 
 Run the packer commands below will create the following image:
 
@@ -29,18 +29,6 @@ kubestack-0-0-1-v20150518
 ```
 cd packer
 packer build kubestack.json
-```
-
-### Create the Kubestack Server Image
-
-```
-packer build kubestack-server.json
-```
-
-### Create the Kubestack Worker Image
-
-```
-packer build kubestack-worker.json
 ```
 
 ## Terraform
