@@ -111,3 +111,28 @@ kubectl config set-credentials kelseyhightower --token='$token'
 kubectl config set-context kubestack --cluster=kubestack --user=$user
 kubectl config use-context kubestack
 ```
+
+```
+kubectl config view
+```
+
+```
+apiVersion: v1
+clusters:
+- cluster:
+    insecure-skip-tls-verify: true
+    server: https://$kubernetes-api-ip:6443
+  name: kubestack
+contexts:
+- context:
+    cluster: kubestack
+    user: $user
+  name: kubestack
+current-context: kubestack
+kind: Config
+preferences: {}
+users:
+- name: $user
+  user:
+    token: $token
+```
