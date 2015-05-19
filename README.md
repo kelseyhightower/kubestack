@@ -102,25 +102,12 @@ Outputs:
 
 ### Configure kubectl
 
-Edit ` ~/.kube/config`. Replace $kubernetes-api-ip with the terrafrom output. Replace $token and $user with the info from `terraform/secrets/tokens.csv`
+Replace `$kubernetes-api-ip` with the terraform output. 
+Replace `$token` and `$user` with the info from `terraform/secrets/tokens.csv`.
 
 ```
-apiVersion: v1
-clusters:
-- cluster:
-    insecure-skip-tls-verify: true
-    server: https://$kubernetes-api-ip:6443
-  name: kubestack
-contexts:
-- context:
-    cluster: kubestack
-    user: $user
-  name: kubestack
-current-context: kubestack
-kind: Config
-preferences: {}
-users:
-  - name: $user
-    user:
-      token: $token
+kubectl config set-cluster kubestack --insecure-skip-tls-verify=true --server=https://$kubernetes-api-ip:6443
+kubectl config set-credentials kelseyhightower --token='$token'
+kubectl config set-context kubestack --cluster=kubestack --user=$user
+kubectl config use-context kubestack
 ```
