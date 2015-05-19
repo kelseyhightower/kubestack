@@ -37,7 +37,14 @@ Terraform will be used to declare and provision a Kubernetes cluster.
 
 ### Prep
 
-- Edit `terraform/terraform.tfvars`. Add the required values:
+Generate an [etcd discovery](https://coreos.com/docs/cluster-management/setup/cluster-discovery/) token:
+
+```
+curl https://discovery.etcd.io/new?size=3
+https://discovery.etcd.io/465df9c06a9d589...
+```
+
+Edit `terraform/terraform.tfvars`. Add the required values:
 
 ```
 discovery_url = "https://discovery.etcd.io/465df9c06a9d589..."
