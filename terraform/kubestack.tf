@@ -1,11 +1,11 @@
-output "kubernetes-api-ip" {
-    value = "${google_compute_instance.kube-apiserver.network_interface.0.access_config.0.nat_ip}"
+output "kubernetes-api-server" {
+    value = "https://${google_compute_instance.kube-apiserver.network_interface.0.access_config.0.nat_ip}:6443"
 }
 
 resource "template_file" "etcd" {
     filename = "etcd.env"
     vars {
-        cluster_name = "${var.cluster_name}"
+        cluster_token = "${var.cluster_name}"
         discovery_url = "${var.discovery_url}"
     }
 }

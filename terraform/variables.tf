@@ -41,5 +41,5 @@ variable "zone" {
 }
 
 variable "cluster_name" {
-     default = "testing"
+    default = "testing"
 }
