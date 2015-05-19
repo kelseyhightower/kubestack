@@ -136,3 +136,30 @@ users:
   user:
     token: $token
 ```
+
+## Register the worker nodes
+
+Nodes will be named based on the following convention:
+
+```
+${cluster_name}-kube${count}.c.${project}.internal
+```
+
+Edit `testing-kube0.c.kubestack.internal.json`
+
+``` 
+{
+  "kind": "Node",
+  "apiVersion": "v1beta3",
+  "metadata": {
+    "name": "testing-kube0.c.kubestack.internal"
+  },
+  "spec": {
+    "externalID": "testing-kube0.c.kubestack.internal"
+  }
+}
+```
+
+```
+kubectl create -f testing-kube0.c.kubestack.internal.json
+```
