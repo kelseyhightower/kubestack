@@ -65,6 +65,11 @@ resource "google_compute_instance" "etcd" {
         "sshKeys" = "${var.sshkey_metadata}"
     }
 
+    connection {
+        user = "core"
+        agent = true
+    }
+
     provisioner "remote-exec" {
         inline = [
             "cat <<'EOF' > /tmp/kubernetes.env\n${template_file.etcd.rendered}\nEOF",
@@ -77,10 +82,6 @@ resource "google_compute_instance" "etcd" {
             "sudo systemctl enable etcd",
             "sudo systemctl start etcd"
         ]
-        connection {
-            user = "core"
-            agent = true
-        }
     }
 
     depends_on = [
@@ -111,13 +112,14 @@ resource "google_compute_instance" "kube-apiserver" {
         "sshKeys" = "${var.sshkey_metadata}"
     }
 
+    connection {
+        user = "core"
+        agent = true
+    }
+
     provisioner "file" {
         source = "${var.token_auth_file}"
         destination = "/tmp/tokens.csv"
-        connection {
-            user = "core"
-            agent = true
-        }
     }
 
     provisioner "remote-exec" {
@@ -137,10 +139,6 @@ resource "google_compute_instance" "kube-apiserver" {
             "sudo systemctl start kube-controller-manager",
             "sudo systemctl start kube-scheduler"
         ]
-        connection {
-            user = "core"
-            agent = true
-        }
     }
 
     depends_on = [
