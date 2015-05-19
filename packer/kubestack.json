@@ -24,8 +24,6 @@
             "sudo tar -xvf kubestack-0.0.1.tar.gz -C /opt/bin",
             "sudo chmod +x -R /opt/bin",
             "sudo chown root:root -R /opt/bin",
-            "sudo mkdir -p /etc/kubernetes",
-            "sudo touch /etc/kubernetes/tokens.csv",
             "sudo mv /tmp/units/*.service /etc/systemd/system",
             "rm -rf /tmp/units"
         ]

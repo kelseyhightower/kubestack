@@ -115,6 +115,7 @@ resource "google_compute_instance" "kube-apiserver" {
         inline = [
             "sudo cat <<'EOF' > /tmp/kubernetes.env\n${template_file.kubernetes.rendered}\nEOF",
             "sudo mv /tmp/kubernetes.env /etc/kubernetes.env",
+            "sudo mkdir -p /etc/kubernetes",
             "sudo mv /tmp/tokens.csv /etc/kubernetes/tokens.csv",
             "sudo systemctl enable flannel",
             "sudo systemctl enable docker",
@@ -140,7 +141,7 @@ resource "google_compute_instance" "kube-apiserver" {
 }
 
 resource "google_compute_instance" "kube" {
-    count = 3
+    count = "${var.worker_count}"
 
     name = "kube${count.index}"
     can_ip_forward = true

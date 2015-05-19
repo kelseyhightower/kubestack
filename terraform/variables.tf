@@ -20,12 +20,16 @@ variable "portal_net" {
     default = "10.200.0.0/16"
 }
 
+variable "region" {
+    default = "us-central1"
+}
+
 variable "token_auth_file" {
     default = "secrets/tokens.csv"
 }
 
-variable "region" {
-    default = "us-central1"
+variable "worker_count" {
+    default = 3
 }
 
 variable "zone" {
