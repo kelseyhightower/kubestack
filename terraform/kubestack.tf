@@ -50,7 +50,7 @@ resource "google_compute_instance" "etcd" {
     }
 
     metadata {
-        "sshKeys" = "${file("sshkey-metadata")}"
+        "sshKeys" = "${var.sshkey_metadata}"
     }
 
     provisioner "file" {
@@ -99,7 +99,7 @@ resource "google_compute_instance" "kube-apiserver" {
     }
 
     metadata {
-        "sshKeys" = "${file("sshkey-metadata")}"
+        "sshKeys" = "${var.sshkey_metadata}"
     }
 
     provisioner "file" {
@@ -162,7 +162,7 @@ resource "google_compute_instance" "kube" {
     }
 
     metadata {
-        "sshKeys" = "${file("sshkey-metadata")}"
+        "sshKeys" = "${var.sshkey_metadata}"
     }
 
     provisioner "remote-exec" {

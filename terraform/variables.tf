@@ -24,6 +24,10 @@ variable "region" {
     default = "us-central1"
 }
 
+variable "sshkey_metadata" {
+    default = ""
+}
+
 variable "token_auth_file" {
     default = "secrets/tokens.csv"
 }
