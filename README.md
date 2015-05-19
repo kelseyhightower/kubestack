@@ -4,7 +4,7 @@ Provision a Kubernetes cluster with [Packer](https://packer.io) and [Terraform](
 
 ## Status
 
-Currently Kubestack only works for my environment, but I'm publishing the bits so you can learn from it. Over the next couple of weeks the repo should be generic enough for reuse with complete documentation.
+Ready for testing. Over the next couple of weeks the repo should be generic enough for reuse with complete documentation.
 
 ## Prep
 
