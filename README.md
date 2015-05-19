@@ -37,7 +37,14 @@ Terraform will be used to declare and provision a Kubernetes cluster.
 
 ### Prep
 
-- Edit `terraform/terraform.tfvars`. Set valid values for `project` and `sshkey_metadata`.
+- Edit `terraform/terraform.tfvars`. Add the required values:
+
+```
+discovery_url = "https://discovery.etcd.io/465df9c06a9d589..."
+project = "kubestack"
+sshkey_metadata = "core: ssh-rsa AAAAB3NzaC1yc2EA..."
+```
+
 - Add API tokens to `terraform/secrets/tokens.csv`. See [Kubernetes Authentication Plugins](https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/authentication.md) for more details.
 - Ensure your local ssh-agent is running and your ssh key has been added. This step is required by the terraform provisioner.
 

@@ -2,6 +2,8 @@ variable "account_file" {
     default = "/etc/kubestack-account.json"
 }
 
+variable "discovery_url" {}
+
 variable "flannel_backend" {
     default = "vxlan"
 }
@@ -24,9 +26,7 @@ variable "region" {
     default = "us-central1"
 }
 
-variable "sshkey_metadata" {
-    default = ""
-}
+variable "sshkey_metadata" {}
 
 variable "token_auth_file" {
     default = "secrets/tokens.csv"

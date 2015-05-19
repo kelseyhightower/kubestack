@@ -1,8 +1,19 @@
+output "kubernetes-api-ip" {
+    value = "${google_compute_instance.kube-apiserver.network_interface.0.access_config.0.nat_ip}"
+}
+
+resource "template_file" "etcd" {
+    filename = "etcd.env"
+    vars {
+        discovery_url = "${var.discovery_url}"
+    }
+}
+
 resource "template_file" "kubernetes" {
     filename = "kubernetes.env"
     vars {
         api_servers = "http://kube-apiserver.c.${var.project}.internal:8080"
-        etcd_servers = "http://etcd0.c.${var.project}.internal:2379,http://etcd1.c.${var.project}.internal:2379,http://etcd2.c.${var.project}.internal:2379"
+        etcd_servers = "${join(",", "${formatlist("http://%s:2379", google_compute_instance.etcd.*.network_interface.0.address)}")}"
         flannel_backend = "${var.flannel_backend}"
         flannel_network = "${var.flannel_network}"
         portal_net = "${var.portal_net}"
@@ -53,20 +64,17 @@ resource "google_compute_instance" "etcd" {
         "sshKeys" = "${var.sshkey_metadata}"
     }
 
-    provisioner "file" {
-        source = "units/etcd${count.index}.service"
-        destination = "/tmp/etcd${count.index}.service"
-        connection {
-            user = "core"
-            agent = true
-        }
-    }
-
     provisioner "remote-exec" {
         inline = [
-            "sudo mv /tmp/etcd${count.index}.service /etc/systemd/system/etcd.service",
+            "cat <<'EOF' > /tmp/kubernetes.env\n${template_file.etcd.rendered}\nEOF",
+            "echo 'ETCD_NAME=${self.name}' >> /tmp/kubernetes.env",
+            "echo 'ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379' >> /tmp/kubernetes.env",
+            "echo 'ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380' >> /tmp/kubernetes.env",
+            "echo 'ETCD_INITIAL_ADVERTISE_PEER_URLS=http://${self.network_interface.0.address}:2380' >> /tmp/kubernetes.env",
+            "echo 'ETCD_ADVERTISE_CLIENT_URLS=http://${self.network_interface.0.address}:2379' >> /tmp/kubernetes.env",
+            "sudo mv /tmp/kubernetes.env /etc/kubernetes.env",
             "sudo systemctl enable etcd",
-            "sudo systemctl start etcd",
+            "sudo systemctl start etcd"
         ]
         connection {
             user = "core"
@@ -75,7 +83,7 @@ resource "google_compute_instance" "etcd" {
     }
     
     depends_on = [
-        "template_file.kubernetes",
+        "template_file.etcd",
     ]
 }
 
