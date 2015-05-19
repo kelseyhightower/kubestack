@@ -27,10 +27,15 @@ provider "google" {
     region = "${var.region}"
 }
 
+resource "google_compute_network" "kubernetes" {
+    name = "${var.cluster_name}"
+    ipv4_range = "10.255.0.0/16"
+}
+
 resource "google_compute_firewall" "kubernetes-api" {
     description = "Kubernetes API"
     name = "secure-kubernetes-api"
-    network = "default"
+    network = "${var.cluster_name}"
 
     allow {
         protocol = "tcp"
@@ -38,6 +43,32 @@ resource "google_compute_firewall" "kubernetes-api" {
     }
 
     source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_firewall" "ssh" {
+    description = "SSH"
+    name = "ssh"
+    network = "${var.cluster_name}"
+
+    allow {
+        protocol = "tcp"
+        ports = ["22"]
+    }
+
+    source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_firewall" "internal" {
+    description = "Allow internal traffic"
+    name = "internal"
+    network = "${var.cluster_name}"
+
+    allow {
+        protocol = "tcp"
+        ports = [ "2379", "2380", "8080" ]
+    }
+
+    source_ranges = [ "${google_compute_network.kubernetes.ipv4_range}" ]
 }
 
 resource "google_compute_instance" "etcd" {
@@ -55,7 +86,7 @@ resource "google_compute_instance" "etcd" {
     }
 
     network_interface {
-        network = "default"
+        network = "${var.cluster_name}"
         access_config {
             // Ephemeral IP
         }
@@ -101,7 +132,7 @@ resource "google_compute_instance" "kube-apiserver" {
     }
 
     network_interface {
-        network = "default"
+        network = "${var.cluster_name}"
         access_config {
             // Ephemeral IP
         }
@@ -164,7 +195,7 @@ resource "google_compute_instance" "kube" {
     }
 
     network_interface {
-        network = "default"
+        network = "${var.cluster_name}"
         access_config {
             // Ephemeral IP
         }
