@@ -82,3 +82,45 @@ Apply the changes:
 terraform plan
 terraform apply
 ```
+
+```
+Apply complete! Resources: 10 added, 0 changed, 0 destroyed.
+
+The state of your infrastructure has been saved to the path
+below. This state is required to modify and destroy your
+infrastructure, so keep it safe. To inspect the complete state
+use the `terraform show` command.
+
+State path: terraform.tfstate
+
+Outputs:
+
+  kubernetes-api-ip = 203.0.113.158
+```
+
+## Next Steps
+
+### Configure kubectl
+
+Edit ` ~/.kube/config`. Replace $kubernetes-api-ip with the terrafrom output. Replace $token and $user with the info from `terraform/secrets/tokens.csv`
+
+```
+apiVersion: v1
+clusters:
+- cluster:
+    insecure-skip-tls-verify: true
+    server: https://$kubernetes-api-ip:6443
+  name: kubestack
+contexts:
+- context:
+    cluster: kubestack
+    user: $user
+  name: kubestack
+current-context: kubestack
+kind: Config
+preferences: {}
+users:
+  - name: $user
+    user:
+      token: $token
+```
