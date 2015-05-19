@@ -55,16 +55,15 @@ terraform plan
 terraform apply
 ```
 
-### Increase the number of worker nodes
+### Resize the number of worker nodes
 
-Edit terraform/kubestack.tf
+Edit `terraform/terraform.tfvars`. Set `worker_count` to the desired value:
 
 ```
-resource "google_compute_instance" "kubelet" {
-    count = 5
+worker_count = 3
 ```
 
-Increase the count to your desired instance count and apply the changes.
+Apply the changes:
 
 ```
 terraform plan
