@@ -95,18 +95,18 @@ State path: terraform.tfstate
 
 Outputs:
 
-  kubernetes-api-ip = 203.0.113.158
+  kubernetes-api-server = https://203.0.113.158:6443
 ```
 
 ## Next Steps
 
 ### Configure kubectl
 
-Replace `$kubernetes-api-ip` with the terraform output. 
+Replace `$kubernetes-api-server` with the terraform output. 
 Replace `$token` and `$user` with the info from `terraform/secrets/tokens.csv`.
 
 ```
-kubectl config set-cluster kubestack --insecure-skip-tls-verify=true --server=https://$kubernetes-api-ip:6443
+kubectl config set-cluster kubestack --insecure-skip-tls-verify=true --server=$kubernetes-api-server
 kubectl config set-credentials kelseyhightower --token='$token'
 kubectl config set-context kubestack --cluster=kubestack --user=$user
 kubectl config use-context kubestack
@@ -121,7 +121,7 @@ apiVersion: v1
 clusters:
 - cluster:
     insecure-skip-tls-verify: true
-    server: https://$kubernetes-api-ip:6443
+    server: $kubernetes-api-server
   name: kubestack
 contexts:
 - context:
