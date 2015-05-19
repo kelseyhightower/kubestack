@@ -5,9 +5,8 @@ Requires=kube-apiserver.service
 After=kube-apiserver.service
 
 [Service]
-ExecStart=/opt/bin/kube-scheduler \
-  --v=2 \
-  --master=http://kube-apiserver.c.kubestack.internal:8080
+EnvironmentFile=/etc/kubernetes.env
+ExecStart=/opt/bin/kube-scheduler $KUBE_SCHEDULER_OPTS
 Restart=on-failure
 RestartSec=5
 

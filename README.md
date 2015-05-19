@@ -18,12 +18,10 @@ The Packer and Terraform configs assume your authentication JSON file is stored 
 
 Immutable infrastructure is the future. Instead of using cloud-init to provision machines at boot we'll create custom images using Packer for the Kubernetes server and worker machines.
 
-Run the packer commands below will create the following images:
+Run the packer commands below will create the following image:
 
 ```
-kubestack-0-0-1-v20150517
-kubestack-server-0-0-1-v20150517
-kubestack-worker-0-0-1-v20150517
+kubestack-0-0-1-v20150518
 ```
 
 ### Create the Kubestack Base Image
@@ -51,7 +49,7 @@ Terraform will be used to declare and provision a Kubernetes cluster.
 
 ### Prep
 
-- Edit `terraform/sshkey`. Replace the ssh public key metadata.
+- Edit `terraform/sshkey-metadata`. Replace the ssh public key metadata.
 - Ensure your local ssh-agent is running and your ssh key has been added.
 
 ```
