@@ -5,6 +5,7 @@ output "kubernetes-api-ip" {
 resource "template_file" "etcd" {
     filename = "etcd.env"
     vars {
+        cluster_name = "${var.cluster_name}"
         discovery_url = "${var.discovery_url}"
     }
 }
