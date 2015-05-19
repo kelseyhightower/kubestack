@@ -6,12 +6,10 @@ Wants=network-online.target
 
 [Service]
 Type=notify
-ExecStartPre=-/usr/bin/etcdctl \
-  -C http://etcd0.c.kubestack.internal:2379,http://etcd1.c.kubestack.internal:2379,http://etcd2.c.kubestack.internal:2379 \
-  mk /coreos.com/network/config '{"Network":"10.10.0.0/16","Backend":{"Type":"vxlan"}}'
-ExecStart=/opt/bin/flanneld \
-  --ip-masq \
-  --etcd-endpoints http://etcd0.c.kubestack.internal:2379,http://etcd1.c.kubestack.internal:2379,http://etcd2.c.kubestack.internal:2379
+EnvironmentFile=/etc/kubernetes.env
+ExecStartPre=-/opt/bin/etcdctl $FLANNEL_ETCDCTL_OPTS \
+  mk $FLANNEL_ETCD_PREFIX ${FLANNEL_NETWORK_CONFIG}
+ExecStart=/opt/bin/flanneld $FLANNEL_OPTS
 Restart=on-failure
 RestartSec=5
 

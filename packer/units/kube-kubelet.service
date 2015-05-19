@@ -5,12 +5,8 @@ Requires=docker.service
 After=docker.service
 
 [Service]
-ExecStart=/opt/bin/kubelet \
-  --address=0.0.0.0 \
-  --enable_server \
-  --port=10250 \
-  --api_servers=http://kube-apiserver.c.kubestack.internal:8080 \
-  --logtostderr=true
+EnvironmentFile=/etc/kubernetes.env
+ExecStart=/opt/bin/kubelet $KUBE_KUBELET_OPTS
 Restart=on-failure
 RestartSec=5
 

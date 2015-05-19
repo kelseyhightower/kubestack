@@ -1,0 +1,11 @@
+[Unit]
+Description=etcd
+
+[Service]
+EnvironmentFile=/etc/kubernetes.env
+ExecStart=/opt/bin/etcd $ETCD_OPTS
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

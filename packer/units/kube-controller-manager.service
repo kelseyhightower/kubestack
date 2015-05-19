@@ -5,9 +5,8 @@ Requires=kube-apiserver.service
 After=kube-apiserver.service
 
 [Service]
-ExecStart=/opt/bin/kube-controller-manager \
-  --master=http://kube-apiserver.c.kubestack.internal:8080 \
-  --logtostderr=true
+EnvironmentFile=/etc/kubernetes.env
+ExecStart=/opt/bin/kube-controller-manager $KUBE_CONTROLLER_MANAGER_OPTS
 Restart=on-failure
 RestartSec=5
 

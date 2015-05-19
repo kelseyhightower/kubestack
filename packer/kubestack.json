@@ -6,18 +6,26 @@
         "source_image": "coreos-alpha-681-0-0-v20150514",
         "zone": "us-central1-a",
         "disk_size": 100,
-        "image_name": "kubestack-0-0-1-v20150517",
+        "image_name": "kubestack-0-0-1-v20150518",
         "image_description": "CoreOS Kubernetes Base Image",
         "machine_type": "n1-standard-1",
         "ssh_username": "core"
     }],
     "provisioners": [{
+        "type": "file",
+        "source": "units",
+        "destination": "/tmp"
+    },
+    {
         "type": "shell",
         "inline": [
             "sudo mkdir -p /opt/bin",
             "wget http://storage.googleapis.com/kubestack/kubestack-0.0.1.tar.gz",
             "sudo tar -xvf kubestack-0.0.1.tar.gz -C /opt/bin",
-            "sudo chown root:root -R /opt/bin"
+            "sudo chmod +x -R /opt/bin",
+            "sudo chown root:root -R /opt/bin",
+            "sudo mv /tmp/units/*.service /etc/systemd/system",
+            "rm -rf /tmp/units"
         ]
     }]
 }
