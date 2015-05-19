@@ -39,3 +39,7 @@ variable "worker_count" {
 variable "zone" {
     default = "us-central1-a"
 }
+
+variable "cluster_name" {
+     default = "testing"
+}

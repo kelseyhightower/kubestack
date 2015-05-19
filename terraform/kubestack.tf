@@ -12,7 +12,7 @@ resource "template_file" "etcd" {
 resource "template_file" "kubernetes" {
     filename = "kubernetes.env"
     vars {
-        api_servers = "http://kube-apiserver.c.${var.project}.internal:8080"
+        api_servers = "http://${var.cluster_name}-kube-apiserver.c.${var.project}.internal:8080"
         etcd_servers = "${join(",", "${formatlist("http://%s:2379", google_compute_instance.etcd.*.network_interface.0.address)}")}"
         flannel_backend = "${var.flannel_backend}"
         flannel_network = "${var.flannel_network}"
@@ -42,7 +42,7 @@ resource "google_compute_firewall" "kubernetes-api" {
 resource "google_compute_instance" "etcd" {
     count = 3
 
-    name = "etcd${count.index}"
+    name = "${var.cluster_name}-etcd${count.index}"
     machine_type = "n1-standard-1"
     can_ip_forward = true
     zone = "${var.zone}"
@@ -81,14 +81,14 @@ resource "google_compute_instance" "etcd" {
             agent = true
         }
     }
-    
+
     depends_on = [
         "template_file.etcd",
     ]
 }
 
 resource "google_compute_instance" "kube-apiserver" {
-    name = "kube-apiserver"
+    name = "${var.cluster_name}-kube-apiserver"
     machine_type = "n1-standard-1"
     can_ip_forward = true
     zone = "${var.zone}"
@@ -151,7 +151,7 @@ resource "google_compute_instance" "kube-apiserver" {
 resource "google_compute_instance" "kube" {
     count = "${var.worker_count}"
 
-    name = "kube${count.index}"
+    name = "${var.cluster_name}-kube${count.index}"
     can_ip_forward = true
     machine_type = "n1-standard-1"
     zone = "${var.zone}"

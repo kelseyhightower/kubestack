@@ -7,3 +7,4 @@ region = "us-central1"
 token_auth_file = "secrets/tokens.csv"
 worker_count = 3
 zone = "us-central1-a"
+cluster_name = "testing"
