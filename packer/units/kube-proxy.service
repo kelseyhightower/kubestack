@@ -5,6 +5,7 @@ Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 [Service]
 ExecStart=/opt/bin/kube-proxy \
   --master=http://kube-apiserver.c.kubestack.internal:8080 \
+  --v=2 \
   --logtostderr=true
 Restart=on-failure
 RestartSec=5

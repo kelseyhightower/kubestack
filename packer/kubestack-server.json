@@ -19,6 +19,8 @@
     {
         "type": "shell",
         "inline": [
+            "sudo mkdir -p /etc/kubernetes",
+            "sudo touch /etc/kubernetes/tokens.csv",
             "sudo mv /tmp/units/flannel.service /etc/systemd/system",
             "sudo mv /tmp/units/docker.service /etc/systemd/system",
             "sudo mv /tmp/units/kube-apiserver.service /etc/systemd/system",

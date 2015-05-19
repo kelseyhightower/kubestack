@@ -1,12 +1,12 @@
 provider "google" {
-    account_file = "/etc/kubestack-account.json"
-    project = "kubestack"
-    region = "us-central1"
+    account_file = "${var.account_file}"
+    project = "${var.project}"
+    region = "${var.region}"
 }
 
-resource "google_compute_firewall" "kube-apiserver" {
-    description = "Kubernetes API Server Secure Port"
-    name = "secure-kube-apiserver"
+resource "google_compute_firewall" "kubernetes-api" {
+    description = "Kubernetes API"
+    name = "secure-kubernetes-api"
     network = "default"
 
     allow {
@@ -14,7 +14,6 @@ resource "google_compute_firewall" "kube-apiserver" {
         ports = ["6443"]
     }
 
-    source_tags = ["kubernetes", "kube-apiserver"]
     source_ranges = ["0.0.0.0/0"]
 }
 
@@ -24,7 +23,7 @@ resource "google_compute_instance" "etcd" {
     name = "etcd${count.index}"
     machine_type = "n1-standard-1"
     can_ip_forward = true
-    zone = "us-central1-a"
+    zone = "${var.zone}"
     tags = ["etcd"]
 
     disk {
@@ -40,7 +39,7 @@ resource "google_compute_instance" "etcd" {
     }
 
     metadata {
-        "sshKeys" = "${file("sshkey")}"
+        "sshKeys" = "${file("sshkey-metadata")}"
     }
 
     provisioner "file" {
@@ -69,8 +68,8 @@ resource "google_compute_instance" "kube-apiserver" {
     name = "kube-apiserver"
     machine_type = "n1-standard-1"
     can_ip_forward = true
-    zone = "us-central1-a"
-    tags = ["kubernetes", "kube-apiserver"]
+    zone = "${var.zone}"
+    tags = ["kubernetes"]
 
     disk {
         image = "kubestack-server-0-0-1-v20150517"
@@ -85,7 +84,7 @@ resource "google_compute_instance" "kube-apiserver" {
     }
 
     metadata {
-        "sshKeys" = "${file("sshkey")}"
+        "sshKeys" = "${file("sshkey-metadata")}"
     }
 
     depends_on = [
@@ -96,10 +95,10 @@ resource "google_compute_instance" "kube-apiserver" {
 resource "google_compute_instance" "kubelet" {
     count = 3
 
-    name = "kubelet${count.index}"
+    name = "kube${count.index}"
     can_ip_forward = true
     machine_type = "n1-standard-1"
-    zone = "us-central1-a"
+    zone = "${var.zone}"
     tags = ["kubelet", "kubernetes"]
 
     disk {
@@ -115,7 +114,7 @@ resource "google_compute_instance" "kubelet" {
     }
 
     metadata {
-        "sshKeys" = "${file("sshkey")}"
+        "sshKeys" = "${file("sshkey-metadata")}"
     }
 
     depends_on = [

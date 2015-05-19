@@ -51,7 +51,14 @@ Terraform will be used to declare and provision a Kubernetes cluster.
 
 ### Prep
 
-Edit `terraform/sshkey`. Replace the ssh public key metadata.
+- Edit `terraform/sshkey`. Replace the ssh public key metadata.
+- Ensure your local ssh-agent is running and your ssh key has been added.
+
+```
+ssh-add ~/.ssh/id_rsa
+```
+
+This step is required by the terraform provisioner.
 
 ### Provision the Kubernetes Cluster
 

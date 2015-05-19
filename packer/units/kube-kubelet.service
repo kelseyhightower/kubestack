@@ -10,6 +10,7 @@ ExecStart=/opt/bin/kubelet \
   --enable_server \
   --port=10250 \
   --api_servers=http://kube-apiserver.c.kubestack.internal:8080 \
+  --v=2 \
   --logtostderr=true
 Restart=on-failure
 RestartSec=5
