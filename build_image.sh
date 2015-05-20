@@ -59,7 +59,14 @@ GC_PROJECT=$(cat settings.json | grep project_id | head -1 | cut -f2 -d":" | sed
 # get latest image name
 coreos_image=$(gcloud compute images list --project=$GC_PROJECT | grep -v grep | grep coreos-$channel | awk {'print $1'})
 
+# get today's date
+tdate=$(date +%Y%m%d)
+
 # Let's build the image
-packer build -var source_image=$coreos_image -var-file=settings.json kubestack.json
+packer build \
+ -var source_image=$coreos_image \
+ -var channel=$channel \
+ -var tdate=$tdate \
+ -var-file=settings.json kubestack.json
 
 # END OF GAME ...

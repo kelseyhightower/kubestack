@@ -1,14 +1,15 @@
 {
     "variables": {
+    "kube_binaries": "{{env `KUBE_BINARIES`}}",
+    "channel": "{{env `CHANNEL`}}",
+    "tdate": "{{env `TDATE`}}",
     "account_file": "{{env `ACCOUNT_FILE`}}",
     "project_id": "{{env `PROJECT_ID`}}",
     "source_image": "{{env `SOURCE_IMAGE`}}",
     "zone": "{{env `ZONE`}}",
-    "image_name": "{{env `IMAGE_NAME`}}",
     "image_description": "{{env `IMAGE_DESCRIPTION`}}",
      "machine_type": "{{env `MACHINE_TYPE`}}"
     },
-
     "builders": [{
         "type": "googlecompute",
         "account_file": "{{user `account_file`}}",
@@ -16,7 +17,7 @@
         "source_image": "{{user `source_image`}}",
         "zone": "{{user `zone`}}",
         "disk_size": 100,
-        "image_name": "{{user `image_name`}}",
+        "image_name": "kubestack-{{user `channel`}}-v{{user `tdate`}}",
         "image_description": "{{user `image_description`}}",
         "machine_type": "{{user `machine_type`}}",
         "ssh_username": "core"
@@ -30,8 +31,8 @@
         "type": "shell",
         "inline": [
             "sudo mkdir -p /opt/bin",
-            "wget http://storage.googleapis.com/kubestack/kubestack-0.0.1.tar.gz",
-            "sudo tar -xvf kubestack-0.0.1.tar.gz -C /opt/bin",
+            "wget -N -O kubestack.tar.gz {{user `kube_binaries`}}",
+            "sudo tar -xvf kubestack.tar.gz -C /opt/bin",
             "sudo chmod +x -R /opt/bin",
             "sudo chown root:root -R /opt/bin",
             "sudo mv /tmp/units/*.service /etc/systemd/system",
