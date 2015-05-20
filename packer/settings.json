@@ -2,7 +2,7 @@
     "account_file": "/full_path/kubestack-account.json"
     "project_id": "kubestack"
     "zone": "us-central1-a"
-    "image_name": "kubestack-0-0-1-v20150518",
     "image_description": "CoreOS Kubernetes Base Image",
-    "machine_type": "n1-standard-1"
+    "machine_type": "n1-standard-1",
+    "kube_binaries": "http://storage.googleapis.com/kubestack/kubestack-0.0.1.tar.gz"
 }
