@@ -1,14 +1,24 @@
 {
+    "variables": {
+    "account_file": "{{env `ACCOUNT_FILE`}}",
+    "project_id": "{{env `PROJECT_ID`}}",
+    "source_image": "{{env `SOURCE_IMAGE`}}",
+    "zone": "{{env `ZONE`}}",
+    "image_name": "{{env `IMAGE_NAME`}}",
+    "image_description": "{{env `IMAGE_DESCRIPTION`}}",
+    "machine_type": "{{env `MACHINE_TYPE`}}",
+    "kube_binaries": "{{env `KUBE_BINARIES`}}"
+    },
     "builders": [{
         "type": "googlecompute",
-        "account_file": "/etc/kubestack-account.json",
-        "project_id": "kubestack",
-        "source_image": "coreos-alpha-681-0-0-v20150514",
-        "zone": "us-central1-a",
+        "account_file": "{{user `account_file`}}",
+        "project_id": "{{user `project_id`}}",
+        "source_image": "{{user `source_image`}}",
+        "zone": "{{user `zone`}}",
         "disk_size": 100,
-        "image_name": "kubestack-0-0-1-v20150518",
-        "image_description": "CoreOS Kubernetes Base Image",
-        "machine_type": "n1-standard-1",
+        "image_name": "{{user `image_name`}}",
+        "image_description": "{{user `image_description`}}",
+        "machine_type": "{{user `machine_type`}}",
         "ssh_username": "core"
     }],
     "provisioners": [{
@@ -20,8 +30,8 @@
         "type": "shell",
         "inline": [
             "sudo mkdir -p /opt/bin",
-            "wget http://storage.googleapis.com/kubestack/kubestack-0.0.1.tar.gz",
-            "sudo tar -xvf kubestack-0.0.1.tar.gz -C /opt/bin",
+            "wget -N -O kubestack.tar.gz {{user `kube_binaries`}}",
+            "sudo tar -xvf kubestack.tar.gz -C /opt/bin",
             "sudo chmod +x -R /opt/bin",
             "sudo chown root:root -R /opt/bin",
             "sudo mv /tmp/units/*.service /etc/systemd/system",
