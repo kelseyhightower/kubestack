@@ -1,14 +1,13 @@
 {
     "variables": {
-    "kube_binaries": "{{env `KUBE_BINARIES`}}",
-    "channel": "{{env `CHANNEL`}}",
-    "tdate": "{{env `TDATE`}}",
     "account_file": "{{env `ACCOUNT_FILE`}}",
     "project_id": "{{env `PROJECT_ID`}}",
     "source_image": "{{env `SOURCE_IMAGE`}}",
     "zone": "{{env `ZONE`}}",
+    "image_name": "{{env `IMAGE_NAME`}}",
     "image_description": "{{env `IMAGE_DESCRIPTION`}}",
-     "machine_type": "{{env `MACHINE_TYPE`}}"
+    "machine_type": "{{env `MACHINE_TYPE`}}",
+    "kube_binaries": "{{env `KUBE_BINARIES`}}"
     },
     "builders": [{
         "type": "googlecompute",
@@ -17,7 +16,7 @@
         "source_image": "{{user `source_image`}}",
         "zone": "{{user `zone`}}",
         "disk_size": 100,
-        "image_name": "kubestack-{{user `channel`}}-v{{user `tdate`}}",
+        "image_name": "{{user `image_name`}}",
         "image_description": "{{user `image_description`}}",
         "machine_type": "{{user `machine_type`}}",
         "ssh_username": "core"
