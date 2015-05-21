@@ -28,7 +28,7 @@ kubestack-0-0-1-v20150518
 
 ```
 cd packer
-packer build kubestack.json
+packer build -var-file=settings.json kubestack.json
 ```
 
 ## Terraform
