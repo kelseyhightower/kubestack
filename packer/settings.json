@@ -1,10 +1,10 @@
 {
     "account_file": "/etc/kubestack-account.json",
     "project_id": "kubestack",
-    "source_image": "coreos-alpha-681-0-0-v20150514",
+    "source_image": "coreos-alpha-695-0-0-v20150528",
     "zone": "us-central1-a",
-    "image_name": "kubestack-0-0-1-v20150518",
+    "image_name": "kubestack-0-17-1-v20150606",
     "image_description": "CoreOS Kubernetes Base Image",
     "machine_type": "n1-standard-1",
-    "kube_binaries": "http://storage.googleapis.com/kubestack/kubestack-0.0.1.tar.gz"
+    "kube_binaries": "http://storage.googleapis.com/kubestack/kubestack-0.17.1.tar.gz"
 }
