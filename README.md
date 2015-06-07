@@ -21,7 +21,7 @@ Immutable infrastructure is the future. Instead of using cloud-init to provision
 Run the packer commands below will create the following image:
 
 ```
-kubestack-0-0-1-v20150518
+kubestack-0-17-1-v20150606
 ```
 
 ### Create the Kubestack Base Image
@@ -53,6 +53,13 @@ sshkey_metadata = "core: ssh-rsa AAAAB3NzaC1yc2EA..."
 ```
 
 - Add API tokens to `terraform/secrets/tokens.csv`. See [Kubernetes Authentication Plugins](https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/authentication.md) for more details.
+
+Example tokens.csv
+
+```
+04b6d6bfe5bexample82db624, kelseyhightower, kelseyhightower
+```
+
 - Ensure your local ssh-agent is running and your ssh key has been added. This step is required by the terraform provisioner.
 
 ```
