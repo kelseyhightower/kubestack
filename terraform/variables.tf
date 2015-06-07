@@ -13,7 +13,7 @@ variable "flannel_network" {
 }
 
 variable "image" {
-    default = "kubestack-0-0-1-v20150518"
+    default = "kubestack-0-17-1-v20150606"
 }
 
 variable "project" {}
