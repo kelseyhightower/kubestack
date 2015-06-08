@@ -105,7 +105,7 @@ us-central1-f  us-central1  UP
 Edit `terraform.tfvars`
 
 ```
-region = "us-central1-b"
+zone = "us-central1-b"
 ```
 
 Be sure to generate a new etcd discovery token:
