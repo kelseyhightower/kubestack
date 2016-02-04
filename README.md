@@ -52,7 +52,7 @@ project = "kubestack"
 sshkey_metadata = "core: ssh-rsa AAAAB3NzaC1yc2EA..."
 ```
 
-- Add API tokens to `terraform/secrets/tokens.csv`. See [Kubernetes Authentication Plugins](https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/authentication.md) for more details.
+- Create your Container Engine Cluster and Add API tokens to `terraform/secrets/tokens.csv`. See [Google Container Engine](https://cloud.google.com/container-engine/docs/before-you-begin) for more details.
 
 Example tokens.csv
 
